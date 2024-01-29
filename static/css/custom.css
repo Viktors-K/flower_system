@@ -1,0 +1,12 @@
+.fa-tree:before {
+    content: "\f1bb";
+  }
+.fa-cright:before {
+    content: "\f1f9";
+  }
+.fa-plus-calendar:before {
+    content: "\f271";
+  }
+.fa-shower:before {
+    content: "\f2cc";
+  }
