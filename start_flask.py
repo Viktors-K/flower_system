@@ -6,16 +6,16 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-#@app.route('/registret', methods=['GET'])
-#def registret():
- #   username = request.args.get('username')
- #   password = request.args.get('password')
-#
-    # Saglabā lietotāja datus teksta failā
- #   with open('lietotaji.txt', 'a') as file:
- #       file.write(f'Lietotājvārds: {username}, Parole: {password}\n')
-#
- #   return 'Reģistrācija veiksmīga!'
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Handle form submission
+        username = request.form['username']
+        password = request.form['password']
+        # Here you can add your logic to authenticate the user
+        print(f"Username: {username}, Password: {password}")
+    else:
+        return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
