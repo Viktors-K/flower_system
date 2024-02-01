@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 
 app = Flask(__name__)
 
@@ -13,7 +13,12 @@ def login():
         username = request.form['username']
         password = request.form['password']
         # Here you can add your logic to authenticate the user
-        print(f"Username: {username}, Password: {password}")
+        if username in users and users[username] == password:
+            # Authentication successful, redirect to dashboard
+            return redirect(url_for('dashboard'))
+        else:
+            # Authentication failed, display error message
+            return render_template('login.html', error='Invalid username or password')
     else:
         return render_template('login.html')
 
