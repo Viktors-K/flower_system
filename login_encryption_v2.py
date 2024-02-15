@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 import csv
+import base64
 
 def add_line_to_csv(file_path, data):
     try:
@@ -21,11 +22,12 @@ def read_lines_from_csv(file_path):
 
 # Function to encrypt data
 def encrypt_data(data,cipher):
-    return cipher.encrypt(data.encode())
+    encrypted = cipher.encrypt(data.encode())
+    return base64.b64encode(encrypted)
 
 # Function to decrypt data
 def decrypt_data(encrypted_data,cipher):
-    decrypted_data = cipher.decrypt(encrypted_data)
+    decrypted_data = cipher.decrypt(base64.b64decode(encrypted_data))
     return decrypted_data.decode()
 
 # Example usage
@@ -40,18 +42,20 @@ if __name__ == "__main__":
     if mode == 'r':
         username = input("Username:")
         password = input("Password:")
-        safe_pass = str(encrypt_data(password,main_cipher))
-        line = [username,safe_pass[2:-1]]
-        
+        safe_pass = encrypt_data(password,main_cipher)
+        line = [username,safe_pass]
         add_line_to_csv(csv_name, line)
-        print(line)
     elif mode == 'l':
         username = input("Username:")
         password = input("Password:")
-        safe_pass = str(encrypt_data(password,main_cipher))
-        line = f"{username}:{safe_pass[2:-1]}"
-        if line in read_lines_from_csv(csv_name):
-            print("Correct login.")
+        stored_lines = read_lines_from_csv(csv_name)
+        for stored_line in stored_lines:
+            stored_username, stored_encrypted_password = stored_line
+            if stored_username == username:
+                stored_password = decrypt_data(stored_encrypted_password, main_cipher)
+                if stored_password == password:
+                    print("Correct login.")
+                    break
         else:
             print("Incorrect login.")
     # Decrypting data
