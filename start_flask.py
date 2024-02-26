@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for
 import csv
 
 csv_name = "C:\\Users\\vvkocetoks\\OneDrive - Rīgas domes izglītības iestādes\\Desktop\\flower_system\\login.csv"
+
 def add_line_to_csv(file_path, data):
     with open(file_path, 'a',) as csvfile:
         writer = csv.writer(csvfile)
@@ -15,6 +16,16 @@ def read_lines_from_csv(file_path):
         for row in reader:
             lines.append(row)
     return lines
+
+def read_users(file_name):
+    data = read_lines_from_csv(file_name)
+    users = []
+    for i in range(0, len(data)):
+        temp = data[i]
+        user = {}
+        user.update({'name': temp[0], 'password': temp[1]})
+        users.append(user)
+    return users
 
 app = Flask(__name__)
 
@@ -30,15 +41,15 @@ def login():
         # Handle form submission
         username = request.form['username']
         password = request.form['password']
-        data = read_lines_from_csv(csv_name)
-        print(data)
+        users = read_users(csv_name)
+        is_same = any(user['name'] == username and user['password'] == password for user in users)
         # Here you can add your logic to authenticate the user
-        if username in users and users[username] == password:
+        if is_same:
             # Authentication successful, redirect to dashboard
             return redirect(url_for('dashboard'))
         else:
             # Authentication failed, display error message
-            return render_template('login.html', error='Invalid username or password')
+            return render_template('login.html', error='Nepareizs lietotājvārds vai parole')
     else:
         return render_template('login.html')
 

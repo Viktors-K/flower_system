@@ -147,6 +147,9 @@
                         <h3>SPROUTSIP</h3>
                         <h2 class="section-title">Ievadiet savu informāciju</h2>
                         <p class="section-subtitle">Ar šo aplikāciju, Jūsu darbs būs optimizēts un tā apjoms būs saīsināts!</p>
+                        {% if error %}
+                        <p style="color: red;">{{ error }}</p>
+                        {% endif %}
                     </div>
 
                 </div>
