@@ -761,6 +761,10 @@ h6 {
     padding: 0 0 15px 0;
 }
 
+.login-heading {
+    padding-top: 50px;
+}
+
 .section-subtitle {
     font-size: 18px;
     padding-top: 0;
@@ -1497,6 +1501,10 @@ blockquote {
 /*------------------------------------------------------------------------------------------*/
 
 #landing-footer {
+    clear: both;
+}
+
+#login-footer {
     clear: both;
 }
 
