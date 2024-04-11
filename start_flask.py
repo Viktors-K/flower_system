@@ -24,7 +24,7 @@ def read_users(file_name):
     for i in range(0, len(data)):
         temp = data[i]
         user = {}
-        user.update({'name': temp[0], 'password': temp[1]})
+        user.update({'name': temp[0], 'password': temp[1], 'admin': temp[2]})
         users.append(user)
     return users
 
@@ -35,16 +35,17 @@ def login_required(func):
         return func(*args, **kwargs)
     return wrapper
 
+def check_admin_status(users, username):
+
+    return False
+
 app = Flask(__name__)
 
-crypt_key = binascii.hexlify(os.urandom(24)).decode()
-print(crypt_key)
-app.secret_key = crypt_key
+app.secret_key = binascii.hexlify(os.urandom(24)).decode()
 
 @app.route('/')
 def home():
     return render_template('index.html')
-
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -54,11 +55,15 @@ def login():
             username = request.form['username']
             password = request.form['password']
             users = read_users(csv_name)
+            print(users)
             is_same = any(user['name'] == username and user['password'] == password for user in users)
             # Here you can add your logic to authenticate the user
             if is_same:
                 # Authentication successful, redirect to dashboard
                 session['username'] = username
+                for user in users:
+                    if user['name'] == username:
+                        session['admin'] = user.get('admin', False)
                 return redirect(url_for('dashboard'))
             else:
                 # Authentication failed, display error message
@@ -70,8 +75,13 @@ def login():
 
 @login_required
 @app.route('/dashboard/')
+
 def dashboard():
-    return render_template('dashboard.html')
+    admin = session.get('admin')
+    if admin == 'True':
+        return render_template('admin_dashboard.html')
+    else:
+        return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
