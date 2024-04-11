@@ -1,3 +1,4 @@
-Filips,abc123
-Karlis,ABC123
-Eriks,zobs123
+Filips,abc123,False
+Karlis,ABC123,True
+Eriks,zobs123,False
+Viktors,yap123,True
