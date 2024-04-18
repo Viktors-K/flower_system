@@ -1,3 +1,32 @@
 body {
   background: #e1e1e1;
 }
+.col-3 {
+  width: 33%;
+}
+
+.row_1 {
+  margin-top: 2%;
+  margin-left:5%;
+  margin-right:5%;
+}
+.card_container {
+  width:fit-content;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 3 equal columns */
+  justify-content: center;
+  align-items: normal;
+  gap: 10px; /* Gap between grid items */
+  padding: 10px; /* Add padding to the container */
+}
+
+.card {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  width: 200px;
+  height: fit-content;
+  text-align: center;
+}
