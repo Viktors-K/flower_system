@@ -35,10 +35,6 @@ def login_required(func):
         return func(*args, **kwargs)
     return wrapper
 
-def check_admin_status(users, username):
-
-    return False
-
 app = Flask(__name__)
 
 app.secret_key = binascii.hexlify(os.urandom(24)).decode()
@@ -55,7 +51,6 @@ def login():
             username = request.form['username']
             password = request.form['password']
             users = read_users(csv_name)
-            print(users)
             is_same = any(user['name'] == username and user['password'] == password for user in users)
             # Here you can add your logic to authenticate the user
             if is_same:
