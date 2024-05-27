@@ -31,6 +31,26 @@ body {
   text-align: center;
 }
 
+.date-header {
+  padding-left:15pt;
+}
+
+.fa {
+  padding-left: 15pt;
+  padding-right: 30pt;
+}
+.social-icons {
+  display: flex;
+}
+.fa-previous:before {
+  padding-left: 30pt;
+  content: "\f054";
+}
+.fa-next:before {
+
+  content: "\f053";
+}
+
 .plant_title {
   font-family: 'Open Sans', sans-serif, Arial, Helvetica;
   font-size: 20pt;
