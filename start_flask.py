@@ -77,7 +77,7 @@ def dashboard():
     if admin == 'True':
         return render_template('admin_dashboard.html')
     else:
-        return render_template('dashman3.html')
+        return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
