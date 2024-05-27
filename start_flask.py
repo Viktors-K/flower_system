@@ -3,7 +3,8 @@ import csv
 import os
 import binascii
 
-csv_name = "C:\\Users\\vvkocetoks\\OneDrive - Rīgas domes izglītības iestādes\\Desktop\\flower_system\\login.csv"
+dirname = os.path.dirname(__file__)
+csv_name = os.path.join(dirname, 'login.csv')
 
 def add_line_to_csv(file_path, data):
     with open(file_path, 'a',) as csvfile:
@@ -76,7 +77,7 @@ def dashboard():
     if admin == 'True':
         return render_template('admin_dashboard.html')
     else:
-        return render_template('dashboard.html')
+        return render_template('dashman3.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
